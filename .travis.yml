@@ -9,15 +9,14 @@ script:
   - docker run -e CI=true issabayevmk/react-test npm test -- --coverage
 
 after_success:
-  #- docker build -t issabayevmk/multi-nginx ./nginx
-  #- docker build -t issabayevmk/multi-server ./server
-  #- docker build -t issabayevmk/multi-worker ./worker
+  - docker build -t issabayevmk/multi-client ./client
+  - docker build -t issabayevmk/multi-nginx ./nginx
+  - docker build -t issabayevmk/multi-server ./server
+  - docker build -t issabayevmk/multi-worker ./worker
   # log in to docker cli
-  #- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin DOCKER_ID DOCKER_PASSWORD
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push images to docker hub
-  - docker build -t issabayevmk/multi-client ./client
   - docker push issabayevmk/multi-client
-  #- docker push issabayevmk/multi-nginx
-  #- docker push issabayevmk/multi-server
-  #- docker push issabayevmk/multi-worker
+  - docker push issabayevmk/multi-nginx
+  - docker push issabayevmk/multi-server
+  - docker push issabayevmk/multi-worker
